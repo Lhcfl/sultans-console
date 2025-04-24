@@ -1,7 +1,8 @@
 <template>
   <v-card prepend-icon="mdi-file-cabinet" title="存档">
     <v-card-text>
-      <h3 class="text-lg mb-2">全局属性</h3>
+      <v-alert color="red" variant="tonal">⚠️改存档有风险，覆盖前先备份</v-alert>
+      <h3 class="text-lg my-2">全局属性</h3>
       <v-form class="flex gap-2 flex-wrap">
         <v-text-field v-model="app.autoSaveJson!.name" class="w-full" label="玩家名称" />
         <v-text-field v-model.number="app.autoSaveJson!.sudan_card_init_life" class="w-70" label="苏丹卡初始限时" type="number" />
@@ -15,7 +16,7 @@
         prepend-icon="mdi-download"
         @click="save"
       >
-        下载存档文件 <code>auto_save.json</code>
+        下载被修改的存档文件 <code>auto_save.json</code>
       </v-btn>
     </v-card-actions>
   </v-card>

@@ -9,16 +9,12 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     AppFooter: typeof import('./components/AppFooter.vue')['default']
-    HelloWorld: typeof import('./components/HelloWorld.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
-    SaveDump: typeof import('./components/SaveDump.vue')['default']
     SaveUpload: typeof import('./components/SaveUpload.vue')['default']
-    SaveViewer: typeof import('./components/SaveViewer.vue')['default']
     SudanBag: typeof import('./components/SudanBag.vue')['default']
     SudanCharas: typeof import('./components/SudanCharas.vue')['default']
     SudanGlobal: typeof import('./components/SudanGlobal.vue')['default']
     SudanJson: typeof import('./components/SudanJson.vue')['default']
-    Upload: typeof import('./components/Upload.vue')['default']
   }
 }

@@ -1,6 +1,6 @@
 <template>
   <v-container class="fill-height" max-width="900">
-    <div class="w-full text-center">
+    <div class="mt-8 w-full text-center">
       <v-img
         class="mb-4"
         height="150"
@@ -15,6 +15,10 @@
       <v-btn prepend-icon="mdi-upload" @click="upload">
         上传存档文件 <code>auto_save.json</code>
       </v-btn>
+      <v-alert class="faq mt-4 bg-primary-low text-left" color="primary" variant="tonal">
+        <p>Q: 在哪？</p>
+        <p>A: 一般在 <code>C:\Users\你的名字\AppData\LocalLow\DoubleCross\SultansGame\SAVEDATA\一串数字</code> 这个文件夹下。</p>
+      </v-alert>
     </div>
   </v-container>
 </template>
