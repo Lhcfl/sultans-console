@@ -1,5 +1,5 @@
 <template>
-  <v-card prepend-icon="mdi-bag-personal-outline" title="Cards">
+  <v-card prepend-icon="mdi-bag-personal-outline" title="卡片">
     <v-card-text>
       <p class="my-2">下一个 UID 应该是 {{ card_uid_index }}</p>
       <v-text-field
@@ -10,10 +10,21 @@
       />
       <v-data-table :headers :items="displayCards" :search="query">
         <template #item.json="{ item }">
-          <v-btn @click="showJson(item.json)">查看</v-btn>
+          <v-btn variant="tonal" @click="showJson(item.json)">查看</v-btn>
         </template>
-        <template #item.卡片数量="{ item }">
-          <v-btn @click="cloneCard(item.json)">克隆</v-btn>
+        <template #item.count="{ item }">
+          <div class="flex items-center gap-2">
+            <v-number-input
+              class="w-50"
+              density="compact"
+              :disabled="item.is_only"
+              hide-details
+              :min="1"
+              :model-value="item.count"
+              @update:model-value="count => setCardCount(item.uid, count)"
+            />
+            <v-btn variant="tonal" @click="cloneCard(item.json)">克隆</v-btn>
+          </div>
         </template>
       </v-data-table>
     </v-card-text>
@@ -32,9 +43,11 @@
 
 <script setup lang="ts">
 import { useAppStore } from '@/stores/app';
-import { CardsDefination } from '@/gamedata/cards';
+import _CardsDefination from '@/gamedata/cards.json';
+import type { ICardDefination } from '@/gamedata/cards';
+import { debounce } from 'vuetify/lib/util/helpers.mjs';
 
-console.log(CardsDefination);
+const CardsDefination = _CardsDefination as Record<string, ICardDefination>;
 
 const app = useAppStore();
 
@@ -66,13 +79,13 @@ const displayCards = computed(() =>
 );
 
 const headers = computed(() => [
-  { text: 'UID', value: 'uid' },
-  { text: '卡片id', value: 'id' },
-  { text: '等阶', value: 'level' },
-  { text: '卡片名称', value: 'name' },
-  { text: '卡片数量', value: 'count' },
-  { text: '描述', value: 'text' },
-  { text: 'json', value: 'json' },
+  { title: 'UID', key: 'uid' },
+  { title: '卡片id', key: 'id' },
+  { title: '等阶', key: 'level' },
+  { title: '卡片名称', key: 'name' },
+  { title: '卡片数量', key: 'count' },
+  { title: '描述', key: 'text' },
+  { title: 'json', key: 'json' },
 ]);
 
 function showJson (text: string) {
@@ -86,7 +99,8 @@ function cloneCard (json: string) {
   app.autoSaveJson!.cards.push(newCard);
 }
 
-function setCardCount (uid: number, count: number) {
+const setCardCount = debounce((uid: number, count: number) => {
+  console.log('setCardCount', uid, count);
   app.autoSaveJson!.cards = app.autoSaveJson!.cards.map(card =>
     card.uid === uid
       ? {
@@ -95,5 +109,5 @@ function setCardCount (uid: number, count: number) {
       }
       : card
   );
-}
+}, 200);
 </script>

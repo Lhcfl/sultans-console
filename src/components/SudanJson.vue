@@ -8,5 +8,5 @@
 <script setup lang="ts">
 import { useAppStore } from '@/stores/app';
 
-const json = JSON.stringify(useAppStore().autoSaveJson, undefined, 2);
+const json = computed(() => JSON.stringify(useAppStore().autoSaveJson, undefined, 2));
 </script>

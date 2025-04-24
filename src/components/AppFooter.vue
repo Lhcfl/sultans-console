@@ -1,6 +1,5 @@
 <template>
   <v-footer app border color="secondary">
-    <v-footer-action />
     <v-btn
       v-for="item in items"
       :key="item.title"

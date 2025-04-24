@@ -16,6 +16,7 @@ declare module 'vue' {
     SaveUpload: typeof import('./components/SaveUpload.vue')['default']
     SaveViewer: typeof import('./components/SaveViewer.vue')['default']
     SudanBag: typeof import('./components/SudanBag.vue')['default']
+    SudanCharas: typeof import('./components/SudanCharas.vue')['default']
     SudanGlobal: typeof import('./components/SudanGlobal.vue')['default']
     SudanJson: typeof import('./components/SudanJson.vue')['default']
     Upload: typeof import('./components/Upload.vue')['default']
