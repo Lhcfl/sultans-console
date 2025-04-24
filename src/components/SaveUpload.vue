@@ -1,6 +1,6 @@
 <template>
   <v-container class="fill-height" max-width="900">
-    <div class="w-100 text-center">
+    <div class="w-full text-center">
       <v-img
         class="mb-4"
         height="150"
@@ -8,7 +8,7 @@
       />
 
       <div class="mb-8 text-center">
-        <h1 class="text-h2 font-weight-bold mb-2">苏丹的终端</h1>
+        <h1 class="text-3xl mb-4">苏丹的终端</h1>
         <p>伟大的苏丹有一个魔法的控制台，现在他将权限赐予给你……</p>
       </div>
 

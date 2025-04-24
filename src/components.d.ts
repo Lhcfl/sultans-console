@@ -14,7 +14,10 @@ declare module 'vue' {
     RouterView: typeof import('vue-router')['RouterView']
     SaveDump: typeof import('./components/SaveDump.vue')['default']
     SaveUpload: typeof import('./components/SaveUpload.vue')['default']
+    SaveViewer: typeof import('./components/SaveViewer.vue')['default']
     SudanBag: typeof import('./components/SudanBag.vue')['default']
+    SudanGlobal: typeof import('./components/SudanGlobal.vue')['default']
+    SudanJson: typeof import('./components/SudanJson.vue')['default']
     Upload: typeof import('./components/Upload.vue')['default']
   }
 }

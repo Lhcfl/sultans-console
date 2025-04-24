@@ -1,6 +1,7 @@
-import * as vuetify from 'eslint-config-vuetify/index.ts.mjs'
+import vuetify from 'eslint-config-vuetify/index.ts.mjs'
+import { defineConfig } from 'eslint/config'
 
-export default [
+export default defineConfig([
   ...vuetify.filter(c => c.name !== 'app/overrides'),
   {
     name: 'app/overrides',
@@ -29,4 +30,4 @@ export default [
       'vue/valid-v-slot': ['error', { allowModifiers: true }],
     },
   },
-];
+]);
