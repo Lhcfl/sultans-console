@@ -28,7 +28,7 @@ import { useAppStore } from '@/stores/app';
 const app = useAppStore();
 
 function save () {
-  const data = JSON.stringify(app, null, 2);
+  const data = JSON.stringify(app.autoSaveJson, null, 2);
   const blob = new Blob([data], { type: 'application/json' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
