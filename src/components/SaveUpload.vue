@@ -3,8 +3,8 @@
     <div class="mt-8 w-full text-center">
       <v-img
         class="mb-4"
-        height="150"
-        src="@/assets/logo.png"
+        height="300"
+        src="@/assets/sudan.jpg"
       />
 
       <div class="mb-8 text-center">

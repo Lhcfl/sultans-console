@@ -13,10 +13,17 @@
     </v-card-text>
     <v-card-actions>
       <v-btn
+        color="primary"
         prepend-icon="mdi-download"
         @click="save"
       >
         下载被修改的存档文件 <code>auto_save.json</code>
+      </v-btn>
+      <v-btn
+        prepend-icon="mdi-reload"
+        @click="refresh"
+      >
+        算了，放弃修改（刷新页面）
       </v-btn>
     </v-card-actions>
   </v-card>
@@ -36,5 +43,9 @@ function save () {
   a.download = 'auto_save.json';
   a.click();
   URL.revokeObjectURL(url);
+}
+
+function refresh () {
+  window.location.reload();
 }
 </script>
