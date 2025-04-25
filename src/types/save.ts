@@ -71,55 +71,7 @@ export interface Card {
   custom_text: string
 }
 
-export interface Tag {
-  adsorb_spec?: number
-  battle?: number
-  physique?: number
-  conceal?: number
-  survival?: number
-  charm?: number
-  social?: number
-  lock_32?: number
-  own?: number
-  reading?: number
-  oppose?: number
-  close?: number
-  open?: number
-  support?: number
-  thief?: number
-  collected?: number
-  adherent?: number
-  hostage?: number
-  newlywed?: number
-  lock_friendship?: number
-  noble?: number
-  passion?: number
-  whore?: number
-  sudan_pool_index?: number
-  freeze?: number
-  piety?: number
-  release?: number
-  lock_13?: number
-  longevity_mark?: number
-  tattoo?: number
-  lock_48?: number
-  traces_of_desire?: number
-  lock_78?: number
-  inspiration?: number
-  wisdom?: number
-  blessing?: number
-  lock_123?: number
-  lock_7?: number
-  lock_131?: number
-  lock_50?: number
-  lock_103?: number
-  pic?: number
-  'dark_ knowledge'?: number
-  magic?: number
-  fight_complete?: number
-  lock_110?: number
-  lock_102?: number
-}
+export type Tag = Record<string, number>;
 
 export interface Equip {
   uid: number

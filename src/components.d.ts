@@ -16,5 +16,7 @@ declare module 'vue' {
     SudanCharas: typeof import('./components/SudanCharas.vue')['default']
     SudanGlobal: typeof import('./components/SudanGlobal.vue')['default']
     SudanJson: typeof import('./components/SudanJson.vue')['default']
+    SudanJsonEdit: typeof import('./components/SudanJsonEdit.vue')['default']
+    SudanTagEdit: typeof import('./components/SudanTagEdit.vue')['default']
   }
 }

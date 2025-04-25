@@ -33,21 +33,9 @@
         </template>
       </v-data-table>
     </v-card-text>
-    <v-dialog v-model="showEditJsonDialog">
-      <v-card class="w-[75%] m-auto" title="修改">
-        <v-card-text>
-          <v-textarea
-            v-model="editJsonText"
-            auto-grow
-            class="font-mono"
-            :error-messages="errors"
-          />
-        </v-card-text>
-        <v-card-actions>
-          <v-btn color="primary" @click="editJsonAction">提交</v-btn>
-          <v-btn @click="showEditJsonDialog = false">关闭</v-btn>
-        </v-card-actions>
-      </v-card>
+    <!-- 角色 Tags 修改对话框 -->
+    <v-dialog v-model="showEditTagDialog">
+      <SudanTagEdit v-model="showEditTagDialog" :uid="tagEditingId" />
     </v-dialog>
     <v-dialog v-model="showJsonDialog">
       <v-card class="w-[75%] m-auto" title="JSON">
@@ -66,7 +54,6 @@
 import { useAppStore } from '@/stores/app';
 import _CardsDefination from '@/gamedata/cards.json';
 import type { ICardDefination } from '@/gamedata/cards';
-import type { Tag } from '@/types/save';
 
 const CardsDefination = _CardsDefination as Record<string, ICardDefination>;
 
@@ -75,10 +62,9 @@ const app = useAppStore();
 const query = ref('');
 const showJsonDialog = ref(false);
 const jsonDialogText = ref('');
-const showEditJsonDialog = ref(false);
-const editJsonAction = ref(() => {});
-const editJsonText = ref('');
-const errors = ref<string[]>([]);
+const showEditTagDialog = ref(false);
+const tagEditingId = ref<number>();
+
 
 const displayCards = computed(() =>
   app.autoSaveJson!.cards.map(card => {
@@ -113,30 +99,10 @@ function showJson (text: string) {
   showJsonDialog.value = true;
 }
 
-function showEditCardTag (card: { uid: number; tag: Tag }) {
-  editJsonText.value = JSON.stringify(card.tag, undefined, 2);
-  showEditJsonDialog.value = true;
-  errors.value = [];
-  editJsonAction.value = () => {
-    const ok = updateCardTag(card.uid, editJsonText.value);
-    if (ok) showEditJsonDialog.value = false;
-  };
+function showEditCardTag (card: { uid: number }) {
+  tagEditingId.value = card.uid;
+  showEditTagDialog.value = true;
 }
-
-const updateCardTag = (uid: number, text: string) => {
-  const card = app.autoSaveJson!.cards.find(card => card.uid === uid);
-  if (card) {
-    try {
-      errors.value = [];
-      const json = JSON.parse(text);
-      card.tag = json;
-      return true;
-    } catch (err) {
-      errors.value.push((err as Error).message);
-      return false;
-    }
-  }
-};
 
 function removeSlot (uid: number, name: string) {
   console.log('removeFirstSlot', uid, name);
