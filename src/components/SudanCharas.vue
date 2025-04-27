@@ -8,6 +8,11 @@
         prepend-inner-icon="mdi-select-search"
       />
       <v-data-table :headers :items="displayCards" :search="query">
+        <template #item.level="{ item }">
+          <v-chip :color="[undefined, 'grey', 'green', 'black', 'orange'][item.level]">
+            {{ ['', '石', '铜', '银', '金'][item.level] }}
+          </v-chip>
+        </template>
         <template #item.json="{ item }">
           <v-btn variant="tonal" @click="showJson(item.json)">查看</v-btn>
         </template>
@@ -30,6 +35,10 @@
               @click:close="removeSlot(item.uid, name)"
             />
           </div>
+        </template>
+        <template #item.text="{item}">
+          <p class="mt-1 flex flex-wrap gap-1"><v-chip v-for="(count, name) in item.tags" :key="name" size="small">{{ name }} {{ count }}</v-chip></p>
+          <p>{{ item.text }}</p>
         </template>
       </v-data-table>
     </v-card-text>
@@ -72,8 +81,9 @@ const displayCards = computed(() =>
     return {
       uid: card.uid,
       id: card.id,
-      level: ['', '石', '铜', '银', '金'][def.rare],
+      level: def.rare,
       tag: card.tag,
+      tags: Object.assign({}, card.tag, def.tag),
       name: def.name,
       text: def.text,
       def,

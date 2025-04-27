@@ -1,7 +1,10 @@
 <template>
   <v-card prepend-icon="mdi-bag-personal-outline" title="卡片">
     <v-card-text>
-      <p class="my-2">下一个 UID 应该是 {{ card_uid_index }}</p>
+      <p class="flex items-center my-2 gap-2">
+        <span>下一个 UID 应该是 {{ card_uid_index }}</span>
+        <v-btn @click="showAddCard = true">添加卡片</v-btn>
+      </p>
       <v-text-field
         v-model="query"
         label="搜索"
@@ -9,8 +12,13 @@
         prepend-inner-icon="mdi-select-search"
       />
       <v-data-table :headers :items="displayCards" :search="query">
+        <template #item.level="{ item }">
+          <v-chip :color="[undefined, 'grey', 'green', 'black', 'orange'][item.level]">
+            {{ ['', '石', '铜', '银', '金'][item.level] }}
+          </v-chip>
+        </template>
         <template #item.json="{ item }">
-          <v-btn variant="tonal" @click="showJson(item.json)">查看</v-btn>
+          <v-btn variant="tonal" @click="showJson(item.uid, item.json)">查看</v-btn>
         </template>
         <template #item.count="{ item }">
           <div class="flex items-center gap-2">
@@ -26,18 +34,14 @@
             <v-btn variant="tonal" @click="cloneCard(item.json)">克隆</v-btn>
           </div>
         </template>
+        <template #item.text="{item}">
+          <p class="mt-1 flex flex-wrap gap-1"><v-chip v-for="(count, name) in item.tags" :key="name" size="small">{{ name }} {{ count }}</v-chip></p>
+          <p>{{ item.text }}</p>
+        </template>
       </v-data-table>
     </v-card-text>
-    <v-dialog v-model="showJsonDialog">
-      <v-card class="w-[75%] m-auto" title="JSON">
-        <v-card-text class="overflow-auto">
-          <pre><code>{{ jsonDialogText }}</code></pre>
-        </v-card-text>
-        <v-card-actions>
-          <v-btn @click="showJsonDialog = false">关闭</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
+    <SudanJsonEdit :key="jsonEditingId" v-model="showJsonDialog" :json="jsonDialogText" :submit="editCardJson" />
+    <SudanAddCard v-model="showAddCard" />
   </v-card>
 </template>
 
@@ -53,7 +57,9 @@ const app = useAppStore();
 
 const query = ref('');
 const showJsonDialog = ref(false);
+const showAddCard = ref(false);
 const jsonDialogText = ref('');
+const jsonEditingId = ref(0);
 
 const card_uid_index = computed({
   get: () => app.autoSaveJson!.card_uid_index,
@@ -68,11 +74,12 @@ const displayCards = computed(() =>
     return {
       uid: card.uid,
       id: card.id,
-      level: ['', '石', '铜', '银', '金'][def.rare],
+      level: def.rare,
       name: def.name,
       count: card.count,
       text: def.text,
       is_only: !('可堆叠' in def.tag),
+      tags: Object.assign({}, card.tag, def.tag),
       json: JSON.stringify(card, undefined, 2),
     };
   })
@@ -88,8 +95,9 @@ const headers = computed(() => [
   { title: 'json', key: 'json' },
 ]);
 
-function showJson (text: string) {
+function showJson (uid: number, text: string) {
   jsonDialogText.value = text;
+  jsonEditingId.value = uid;
   showJsonDialog.value = true;
 }
 
@@ -110,4 +118,12 @@ const setCardCount = debounce((uid: number, count: number) => {
       : card
   );
 }, 200);
+
+async function editCardJson (json: string) {
+  app.autoSaveJson!.cards = app.autoSaveJson!.cards.map(card =>
+    card.uid === jsonEditingId.value
+      ? JSON.parse(json)
+      : card
+  );
+}
 </script>

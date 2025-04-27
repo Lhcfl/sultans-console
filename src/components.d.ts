@@ -12,6 +12,7 @@ declare module 'vue' {
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SaveUpload: typeof import('./components/SaveUpload.vue')['default']
+    SudanAddCard: typeof import('./components/SudanAddCard.vue')['default']
     SudanBag: typeof import('./components/SudanBag.vue')['default']
     SudanCharas: typeof import('./components/SudanCharas.vue')['default']
     SudanGlobal: typeof import('./components/SudanGlobal.vue')['default']
