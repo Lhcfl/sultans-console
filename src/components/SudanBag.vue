@@ -72,7 +72,7 @@ const displayCards = computed(() =>
       name: def.name,
       count: card.count,
       text: def.text,
-      is_only: Boolean(def.is_only),
+      is_only: !('可堆叠' in def.tag),
       json: JSON.stringify(card, undefined, 2),
     };
   })
